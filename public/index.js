@@ -43,6 +43,7 @@ async function getSolved() {
     return
   }
   fillpuzzle(parsed.solution)
+  textArea.value=parsed.solution;
 }
 
 async function getChecked() {

@@ -1,6 +1,7 @@
 {
   "name": "sudoku-solver",
   "version": "2.0.0",
+  "author": {"name": "Can Yücel Yavuz", "email": "canyucelyavuz@gmail.com"},
   "description": "Quality Assurance 4: Sudoku Solver",
   "main": "index.js",
   "scripts": {
