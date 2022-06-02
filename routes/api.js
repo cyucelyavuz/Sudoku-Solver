@@ -51,29 +51,16 @@ module.exports = function (app) {
     
   app.route('/api/solve')
     .post((req, res) => {
-      let bufferArr=req.body.puzzle.split("");
-      let input = req.body.puzzle
-      if(!solver.validate(input)) res.json({error:"Expected puzzle to be 81 characters long"});
-      
-
-      else {
-        for(let i=0;i<9;i++){
-          for (let j=0;j<9;j++){
-            if(bufferArr[i*9+j]==='.'){
-            for( let num=1;num<10;num++){
-              
-                if(solver.checkRowPlacement(input,i,num) && solver.checkColPlacement(input,j,num) && solver.checkRegionPlacement(input,[i,j],num)){
-                  bufferArr[i*9+j]=num;
-                  console.log(num);
-                  input=bufferArr.join('');
-                }
-                
-            }
-            }
-          }
-        }
-        console.log(input);
+      let response;
+      if(!solver.validate(req.body.puzzle)) res.json({error:"Expected puzzle to be 81 characters long"});
+      else{
+        response= solver.solve(req.body.puzzle);
       }
-      res.json({solution:input});
+
+   
+        
+       
+    
+      res.json({solution:response});
     });
 };

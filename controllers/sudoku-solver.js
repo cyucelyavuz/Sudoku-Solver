@@ -56,7 +56,27 @@ class SudokuSolver {
   }
 
   solve(puzzleString) {
-    
+
+    let bufferArr=puzzleString.split('');
+
+    for(let i=0;i<9;i++){
+      for (let j=0;j<9;j++){
+        if(bufferArr[i*9+j]==='.'){
+        for( let num=1;num<10;num++){
+            
+            if(this.checkRowPlacement(puzzleString,i,String(num)) && 
+              this.checkColPlacement(puzzleString,j,String(num)) && 
+              this.checkRegionPlacement(puzzleString,[i,j],String(num))){
+              bufferArr[i*9+j]=num;
+              console.log(num);
+              puzzleString=bufferArr.join('');
+            }
+            
+        }
+        }
+      }
+    }
+    return puzzleString;
   }
 }
 
