@@ -32,8 +32,9 @@ suite('Functional Tests', () => {
             .end((err,res)=>{
                 if (err) console.log(err)
                 else{
+                    
                     assert.equal(res.status,200);
-                    assert.equal(res.body.solution,'123456789456789123789123456214365897365897214897214365531642978642978531978531642');
+                    assert.equal(res.body.error,'Required field missing');
                     done();
                 }
             })
