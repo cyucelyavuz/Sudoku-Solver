@@ -22,7 +22,10 @@ module.exports = function (app) {
 
   app.route('/api/check')
     .post((req, res) => {
-      if (!solver.validate(req.body.puzzle)) res.json({error:"Expected puzzle to be 81 characters long"});
+      
+      
+      
+      if (!solver.validate(req.body.puzzle)) res.json(solver.validate(req.body.puzzle));
         else if(!req.body.coordinate || !req.body.value) res.json({error:"Required field(s) missing"});
           
       else{
@@ -52,7 +55,7 @@ module.exports = function (app) {
   app.route('/api/solve')
     .post((req, res) => {
       let response;
-      if(!solver.validate(req.body.puzzle)) res.json({error:"Expected puzzle to be 81 characters long"});
+      if(solver.validate(req.body.puzzle)!==true) res.json(solver.validate(req.body.puzzle));
       else{
         response= solver.solve_mod(req.body.puzzle);
         //console.log(solver.solve_mod(req.body.puzzle));
