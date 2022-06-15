@@ -54,6 +54,7 @@ module.exports = function (app) {
     
   app.route('/api/solve')
     .post((req, res) => {
+      if(!req.body.puzzle) req.body.puzzle='.................................................................................'
       let response;
       if(solver.validate(req.body.puzzle)!==true) res.json(solver.validate(req.body.puzzle));
       else{
