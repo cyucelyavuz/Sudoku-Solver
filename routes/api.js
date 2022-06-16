@@ -26,7 +26,7 @@ module.exports = function (app) {
       const valueReg=/\d{1}|\.{1}/;
       
       
-      if (!solver.validate(req.body.puzzle)) res.json(solver.validate(req.body.puzzle));
+      if (solver.validate(req.body.puzzle)!==true) res.json(solver.validate(req.body.puzzle));
       if(!req.body.coordinate || !req.body.value) res.json({error:"Required field(s) missing"});
       if (!coordinateReg.test(req.body.coordinate)) res.json({error:'Invalid coordinate'});
       if(!valueReg.test(req.body.value)) res.json({error:'Invalid value'})
@@ -59,7 +59,8 @@ module.exports = function (app) {
           responseObj.conflict.push("region");
         }
         
-        res.json(responseObj);
+        (responseObj.valid) ? res.json({valid:responseObj.valid}) : res.json(responseObj);
+        
     }
  });
     

@@ -105,7 +105,6 @@ suite('Functional Tests', () => {
                 else{
                     assert.equal(res.status,200);
                     assert.equal(res.body.valid,true);
-                    assert.lengthOf(res.body.conflict,0);
                     done();
                 }
             })
