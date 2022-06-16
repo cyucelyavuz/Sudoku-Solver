@@ -58,7 +58,7 @@ module.exports = function (app) {
           responseObj.valid=false;
           responseObj.conflict.push("region");
         }
-        if(responseObj.valid===true)
+        
         res.json(responseObj);
     }
  });

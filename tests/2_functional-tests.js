@@ -134,14 +134,14 @@ suite('Functional Tests', () => {
     });
 
 
-    test('Check a puzzle placement with single placement conflict',(done)=>{
+    test('Check a puzzle placement with multiple placement conflicts',(done)=>{
         chai.request(server)
             .post('/api/check')
             .type('form')
             .send({
                 puzzle:testStrings[0][0],
-                coordinate:'A1',
-                value:'4'
+                coordinate:'A2',
+                value:'6'
             })
             .end((err,res)=>{
                 if (err) console.log(err)
@@ -149,7 +149,7 @@ suite('Functional Tests', () => {
                     assert.equal(res.status,200);
                     assert.equal(res.body.valid,false);
                     assert.lengthOf(res.body.conflict,2);
-                    assert.deepEqual(res.body.conflict,[ "row", "column" ]);
+                    assert.deepEqual(res.body.conflict,[ "column","region" ]);
                     done();
                 }
             })
@@ -161,7 +161,7 @@ suite('Functional Tests', () => {
             .type('form')
             .send({
                 puzzle:testStrings[0][0],
-                coordinate:'A1',
+                coordinate:'A2',
                 value:'2'
             })
             .end((err,res)=>{
@@ -183,7 +183,7 @@ suite('Functional Tests', () => {
             .type('form')
             .send({
                 puzzle:testStrings[0][0],
-                coordinate:'A1'
+                coordinate:'A2'
             })
             .end((err,res)=>{
                 if (err) console.log(err)
@@ -202,7 +202,7 @@ suite('Functional Tests', () => {
             .type('form')
             .send({
                 puzzle:testStrings[0][0],
-                coordinate:'A1'
+                coordinate:'A2'
             })
             .end((err,res)=>{
                 if (err) console.log(err)
