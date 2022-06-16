@@ -33,12 +33,16 @@ class SudokuSolver {
         else return (puzzleString.length===81 && regex.test(puzzleString));
   }
 
-  checkRowPlacement(puzzleString, row,value) {
+  checkRowPlacement(puzzleString,row,value) {
+    
     const data= arrayize(puzzleString);
+    
+
     return (data[row].indexOf(value)===-1 ? true : false);
   }
 
-  checkColPlacement(puzzleString, column, value) {
+  checkColPlacement(puzzleString,column, value) {
+   
     const data = arrayize(puzzleString);
     const outcome= data.map(elem=> elem[column]===value ? false : true);
     return (outcome.indexOf(false)===-1 ? true : false);

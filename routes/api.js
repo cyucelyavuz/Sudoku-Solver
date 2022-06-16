@@ -23,7 +23,7 @@ module.exports = function (app) {
   app.route('/api/check')
     .post((req, res) => {
       const coordinateReg=/[a-zA-Z]{1}\d{1}/;
-      const valueReg=/\d{1}/;
+      const valueReg=/\d{1}|\.{1}/;
       
       
       if (!solver.validate(req.body.puzzle)) res.json(solver.validate(req.body.puzzle));
@@ -41,19 +41,24 @@ module.exports = function (app) {
         }
 
         const index=indexize(req.body.coordinate);
+        let puzzlesArr= req.body.puzzle.split('');
+        if (puzzlesArr[index[0]*8+index[1]]!=='.') puzzlesArr[index[0]*8+index[1]]='.';
+        const puzzleString=puzzlesArr.join('');
+        //console.log(puzzleString);
 
-        if(!solver.checkRowPlacement(req.body.puzzle,index[0],req.body.value)) {
+        if(!solver.checkRowPlacement(puzzleString,index[0],req.body.value)) {
           responseObj.valid=false;
           responseObj.conflict.push("row");
         }
-        if(!solver.checkColPlacement(req.body.puzzle,index[1],req.body.value)){
+        if(!solver.checkColPlacement(puzzleString,index[1],req.body.value)){
           responseObj.valid=false;
           responseObj.conflict.push("column");
         }
-        if(!solver.checkRegionPlacement(req.body.puzzle,index,req.body.value)){
+        if(!solver.checkRegionPlacement(puzzleString,index,req.body.value)){
           responseObj.valid=false;
           responseObj.conflict.push("region");
         }
+        if(responseObj.valid===true)
         res.json(responseObj);
     }
  });
