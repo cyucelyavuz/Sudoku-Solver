@@ -23,7 +23,7 @@ module.exports = function (app) {
   app.route('/api/check')
     .post((req, res) => {
       const coordinateReg=/[a-zA-Z]{1}\d{1}/;
-      const valueReg=/\d{1}|\.{1}/;
+      const valueReg=/^[1-9]{1}$|^\.{1}$/;
       
       
       if (solver.validate(req.body.puzzle)!==true) res.json(solver.validate(req.body.puzzle));
