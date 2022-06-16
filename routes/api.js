@@ -22,7 +22,7 @@ module.exports = function (app) {
 
   app.route('/api/check')
     .post((req, res) => {
-      const coordinateReg=/^[a-zA-Z]{1}[1-9]{1}$/;
+      const coordinateReg=/^[a-iA-I]{1}[1-9]{1}$/;
       const valueReg=/^[1-9]{1}$|^\.{1}$/;
       
       
