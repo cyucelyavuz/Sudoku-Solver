@@ -195,19 +195,77 @@ suite('Functional Tests', () => {
     });
 
 
-    test('Check a puzzle placement with missing required fields',(done)=>{
+    test('Check a puzzle placement with invalid characters',(done)=>{
         chai.request(server)
             .post('/api/check')
             .type('form')
             .send({
-                puzzle:testStrings[0][0],
-                coordinate:'A2'
+                puzzle:'1.5w.2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.',
+                coordinate:'A2',
+                value:'9'
             })
             .end((err,res)=>{
                 if (err) console.log(err)
                 else{
                     assert.equal(res.status,200);
-                    assert.equal(res.body.error,"Required field(s) missing");
+                    assert.equal(res.body.error,"Invalid characters in puzzle");
+                    done();
+                }
+            })
+    });
+
+    test('Check a puzzle placement with incorrect length',(done)=>{
+        chai.request(server)
+            .post('/api/check')
+            .type('form')
+            .send({
+                puzzle:testStrings[0][0]+'.',
+                coordinate:'A2',
+                value:'10'
+            })
+            .end((err,res)=>{
+                if (err) console.log(err)
+                else{
+                    assert.equal(res.status,200);
+                    assert.equal(res.body.error,"Expected puzzle to be 81 characters long");
+                    done();
+                }
+            })
+    });
+
+    test('Check a puzzle placement with invalid placement coordinate',(done)=>{
+        chai.request(server)
+            .post('/api/check')
+            .type('form')
+            .send({
+                puzzle:testStrings[0][0],
+                coordinate:'Aa2',
+                value:'9'
+            })
+            .end((err,res)=>{
+                if (err) console.log(err)
+                else{
+                    assert.equal(res.status,200);
+                    assert.equal(res.body.error,"Invalid coordinate");
+                    done();
+                }
+            })
+    });
+
+    test('Check a puzzle placement with invalid placement value',(done)=>{
+        chai.request(server)
+            .post('/api/check')
+            .type('form')
+            .send({
+                puzzle:testStrings[0][0],
+                coordinate:'A2',
+                value:'10'
+            })
+            .end((err,res)=>{
+                if (err) console.log(err)
+                else{
+                    assert.equal(res.status,200);
+                    assert.equal(res.body.error,"Invalid value");
                     done();
                 }
             })
