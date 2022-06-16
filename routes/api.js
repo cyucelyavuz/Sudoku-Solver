@@ -25,9 +25,9 @@ module.exports = function (app) {
       const coordinateReg=/^[a-iA-I]{1}[1-9]{1}$/;
       const valueReg=/^[1-9]{1}$|^\.{1}$/;
       
-      
+      if(!req.body.coordinate || !req.body.value || !req.body.puzzle) res.json({error:"Required field(s) missing"});
       if (solver.validate(req.body.puzzle)!==true) res.json(solver.validate(req.body.puzzle));
-      if(!req.body.coordinate || !req.body.value) res.json({error:"Required field(s) missing"});
+      
       if (!coordinateReg.test(req.body.coordinate)) res.json({error:'Invalid coordinate'});
       if(!valueReg.test(req.body.value)) res.json({error:'Invalid value'})
       if(solver.validate(req.body.puzzle) && 
