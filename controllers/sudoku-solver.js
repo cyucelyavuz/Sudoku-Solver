@@ -98,7 +98,10 @@ class SudokuSolver {
     
     
      do{
-      
+        if (emptiesIndex<0) {
+          return 'failed to solve';
+          break;
+        }
         bufferArrIndex=Number(empties[emptiesIndex]);
      
         for(let num= ((bufferArr[bufferArrIndex]==='.') ? 1 : bufferArr[bufferArrIndex]+1); ;num++){
@@ -108,21 +111,21 @@ class SudokuSolver {
           if (num===10){
           //backtrack...
          // console.log('backtrack.......');
-            bufferArr[bufferArrIndex]='.';
-           puzzleString=bufferArr.join('');
-           emptiesIndex--;
+          bufferArr[bufferArrIndex]='.';
+          puzzleString=bufferArr.join('');
+          emptiesIndex--;
         
           
            break;
          }
           else {
-          //console.log('checking '+'i= '+Math.floor(bufferArrIndex/9)+ ' j= '+bufferArrIndex%9+ ' ' + num);
+         // console.log('checking '+'i= '+Math.floor(bufferArrIndex/9)+ ' j= '+bufferArrIndex%9+ ' ' + num);
             if(this.checkRowPlacement(puzzleString,Math.floor(bufferArrIndex/9),String(num)) && 
               this.checkColPlacement(puzzleString,bufferArrIndex%9,String(num)) &&
               this.checkRegionPlacement(puzzleString,[Math.floor(bufferArrIndex/9),bufferArrIndex%9],String(num))){
                bufferArr[bufferArrIndex]=num;
               //lastPlacedValue=num;
-              //console.log('placed i= '+Math.floor(bufferArrIndex/9)+ ' j= '+bufferArrIndex%9+ ' ' + num);
+             // console.log('placed i= '+Math.floor(bufferArrIndex/9)+ ' j= '+bufferArrIndex%9+ ' ' + num);
                 puzzleString=bufferArr.join('');
               
                emptiesIndex++;
@@ -134,6 +137,7 @@ class SudokuSolver {
        }
       
        if(emptiesIndex===empties.length) solved=true;
+        
     } while(solved===false)
 
 

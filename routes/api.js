@@ -22,13 +22,19 @@ module.exports = function (app) {
 
   app.route('/api/check')
     .post((req, res) => {
-      
+      const coordinateReg=/[a-zA-Z]{1}\d{1}/;
+      const valueReg=/\d{1}/;
       
       
       if (!solver.validate(req.body.puzzle)) res.json(solver.validate(req.body.puzzle));
-        else if(!req.body.coordinate || !req.body.value) res.json({error:"Required field(s) missing"});
-          
-      else{
+      if(!req.body.coordinate || !req.body.value) res.json({error:"Required field(s) missing"});
+      if (!coordinateReg.test(req.body.coordinate)) res.json({error:'Invalid coordinate'});
+      if(!valueReg.test(req.body.value)) res.json({error:'Invalid value'})
+      if(solver.validate(req.body.puzzle) && 
+          req.body.coordinate && 
+          req.body.value &&
+          coordinateReg.test(req.body.coordinate)&&
+          valueReg.test(req.body.value)){
         let responseObj={
           valid:true,
           conflict:[]
@@ -66,7 +72,7 @@ module.exports = function (app) {
    
         
        
-    
-      res.json({solution:response});
+      if(response==='failed to solve') res.json({ error: 'Puzzle cannot be solved' });
+      else res.json({solution:response});
     });
 };
