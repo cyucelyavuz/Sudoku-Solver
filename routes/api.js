@@ -42,7 +42,7 @@ module.exports = function (app) {
 
         const index=indexize(req.body.coordinate);
         let puzzlesArr= req.body.puzzle.split('');
-        if (puzzlesArr[index[0]*8+index[1]]!=='.') {
+        if (puzzlesArr[index[0]*9+index[1]]!=='.') {
           console.log('puzzleStr='+req.body.puzzle+'\n'+'coordinate='+req.body.coordinate+'\n'+'value='+req.body.value);
           puzzlesArr[index[0]*8+index[1]]='.';
         }
